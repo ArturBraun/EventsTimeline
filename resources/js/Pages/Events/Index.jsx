@@ -3,8 +3,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head } from '@inertiajs/inertia-react';
+import Event from '@/Components/Event';
  
-export default function Index({ auth }) {
+export default function Index({ auth, events }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         detailedDescription: '',
     });
@@ -29,6 +30,12 @@ export default function Index({ auth }) {
                     <InputError detailedDescription={errors.detailedDescription} className="mt-2" />
                     <PrimaryButton className="mt-4" disabled={processing}>Save event</PrimaryButton>
                 </form>
+
+                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                    {events.map(event =>
+                        <Event key={event.id} event={event} />
+                    )}
+                </div>
             </div>
         </AuthenticatedLayout>
     );
