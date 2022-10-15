@@ -39,11 +39,11 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'detailedDescription' => 'required|string|max:1024',
+            'detailed_description' => 'required|string|max:1024',
         ]);
 
         $event = new Event;
-        $event->detailed_description = $request->detailedDescription;
+        $event->detailed_description = $request->detailed_description;
         $event->save();
  
         return redirect(route('events.index'));
@@ -80,7 +80,15 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $validated = $request->validate([
+            'detailed_description' => 'required|string|max:1024',
+        ]);
+
+        $eventFromDb = Event::find($event->id);
+        $eventFromDb->detailed_description = $request->detailed_description; 
+        $eventFromDb->save();
+
+        return redirect(route('events.index'));
     }
 
     /**

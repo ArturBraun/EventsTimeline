@@ -7,7 +7,7 @@ import Event from '@/Components/Event';
  
 export default function Index({ auth, events }) {
     const { data, setData, post, processing, reset, errors } = useForm({
-        detailedDescription: '',
+        detailed_description: '',
     });
  
     const submit = (e) => {
@@ -22,12 +22,12 @@ export default function Index({ auth, events }) {
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <form onSubmit={submit}>
                     <textarea
-                        value={data.detailedDescription}
+                        value={data.detailed_description}
                         placeholder="What's on your mind?"
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        onChange={e => setData('detailedDescription', e.target.value)}
+                        onChange={e => setData('detailed_description', e.target.value)}
                     ></textarea>
-                    <InputError detailedDescription={errors.detailedDescription} className="mt-2" />
+                    <InputError detailed_description={errors.detailed_description} className="mt-2" />
                     <PrimaryButton className="mt-4" disabled={processing}>Save event</PrimaryButton>
                 </form>
 
