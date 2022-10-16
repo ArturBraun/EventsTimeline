@@ -26,7 +26,7 @@ Route::get('/', function () {
 });
 
 Route::resource('events', EventController::class)
-    ->only(['index', 'store', 'update'])
+    ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
