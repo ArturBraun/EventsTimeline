@@ -3,6 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, usePage } from '@inertiajs/inertia-react';
+import EventForm from '@/Components/EventForm'
 
  
 export default function Event({ event }) { 
@@ -49,15 +50,16 @@ export default function Event({ event }) {
                         </Dropdown.Content>
                     </Dropdown>
                 </div>
-                { editing
-                    ? <form onSubmit={submit}>
-                        <textarea value={data.detailed_description} onChange={e => setData('detailed_description', e.target.value)} className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
-                        <InputError detailed_description={errors.detailed_description} class="mt-2" />
-                        <div className="space-x-2">
-                            <PrimaryButton className="mt-4">Save</PrimaryButton>
-                            <button className="mt-4" onClick={() => setEditing(false) && reset()}>Cancel</button>
-                        </div>
-                    </form>
+                { editing ?
+                    // <form onSubmit={submit}>
+                    //     <textarea value={data.detailed_description} onChange={e => setData('detailed_description', e.target.value)} className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
+                    //     <InputError detailed_description={errors.detailed_description} class="mt-2" />
+                    //     <div className="space-x-2">
+                    //         <PrimaryButton className="mt-4">Save</PrimaryButton>
+                    //         <button className="mt-4" onClick={() => setEditing(false) && reset()}>Cancel</button>
+                    //     </div>
+                    // </form>
+                    <EventForm event={event} setEditing={setEditing} isEventEdit={true}/>
                     : <p className="mt-4 text-lg text-gray-900">{event.detailed_description}</p>
                 }
             </div>
