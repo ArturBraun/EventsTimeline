@@ -12,7 +12,7 @@ export default function EventForm({ event, setEditing, isEventEdit=false }) {
         detailed_description: event.detailed_description ? event.detailed_description : '',
     };
 
-    const { data, setData, post, processing, reset, errors } = useForm(eventData);
+    const { data, setData, put, processing, reset, errors } = useForm(eventData);
 
     const submit = (e) => {
         e.preventDefault();
@@ -21,13 +21,12 @@ export default function EventForm({ event, setEditing, isEventEdit=false }) {
             put(route('events.update', event.id), { onSuccess: () => setEditing(false) });
         }
         else{
-            post(route('events.store'), { onSuccess: () => reset() });
+            Inertia.post('/events', data, { onSuccess: () => reset() });
         }
     };
 
     return (
         <form onSubmit={submit}>
-            {/* <textarea value={data.detailed_description} onChange={e => setData('detailed_description', e.target.value)} className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea> */}
             <textarea
                 value={data.detailed_description}
                 placeholder="Event description"

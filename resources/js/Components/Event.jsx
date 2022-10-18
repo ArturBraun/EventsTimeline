@@ -51,14 +51,6 @@ export default function Event({ event }) {
                     </Dropdown>
                 </div>
                 { editing ?
-                    // <form onSubmit={submit}>
-                    //     <textarea value={data.detailed_description} onChange={e => setData('detailed_description', e.target.value)} className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
-                    //     <InputError detailed_description={errors.detailed_description} class="mt-2" />
-                    //     <div className="space-x-2">
-                    //         <PrimaryButton className="mt-4">Save</PrimaryButton>
-                    //         <button className="mt-4" onClick={() => setEditing(false) && reset()}>Cancel</button>
-                    //     </div>
-                    // </form>
                     <EventForm event={event} setEditing={setEditing} isEventEdit={true}/>
                     : <p className="mt-4 text-lg text-gray-900">{event.detailed_description}</p>
                 }
