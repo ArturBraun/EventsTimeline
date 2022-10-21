@@ -16,7 +16,7 @@ class EventController extends Controller
     public function index()
     {
         return Inertia::render('Events/Index', [
-            'events' => Event::orderBy('created_at', 'DESC')->get(),
+            'events' => Event::orderBy('end_date', 'DESC')->get(),
         ]);
     }
 
@@ -39,11 +39,19 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'name' => 'required|string|max:128',
+            'short_description' => 'required|string|max:512',
             'detailed_description' => 'required|string|max:1024',
+            'start_date' => 'date',
+            'end_date' => 'required|date',
         ]);
 
         $event = new Event;
+        $event->name = $request->name;
+        $event->short_description = $request->short_description;
         $event->detailed_description = $request->detailed_description;
+        $event->start_date = $request->start_date;
+        $event->end_date = $request->end_date;
         $event->save();
  
         return redirect(route('events.index'));
@@ -81,11 +89,19 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $validated = $request->validate([
+            'name' => 'required|string|max:128',
+            'short_description' => 'required|string|max:512',
             'detailed_description' => 'required|string|max:1024',
+            'start_date' => 'date',
+            'end_date' => 'required|date',
         ]);
 
         $eventFromDb = Event::find($event->id);
-        $eventFromDb->detailed_description = $request->detailed_description; 
+        $eventFromDb->name = $event->name;
+        $eventFromDb->short_description = $event->short_description;
+        $eventFromDb->detailed_description = $event->detailed_description;
+        $eventFromDb->start_date = $event->start_date;
+        $eventFromDb->end_date = $event->end_date;
         $eventFromDb->save();
 
         return redirect(route('events.index'));

@@ -11,10 +11,6 @@ export default function Event({ event }) {
 
     const [editing, setEditing] = useState(false);
  
-    const { data, setData, put, processing, reset, errors } = useForm({
-        detailed_description: event.detailed_description,
-    });
- 
     const submit = (e) => {
         e.preventDefault();
         put(route('events.update', event.id), { onSuccess: () => setEditing(false) });
@@ -28,8 +24,10 @@ export default function Event({ event }) {
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <div>
-                        <span className="text-gray-800">Title</span>
-                        <small className="ml-2 text-sm text-gray-600">{new Date(event.created_at).toLocaleString()}</small>
+                        <span className="text-gray-800">{event.name}</span>
+                        <small className="ml-2 text-sm text-gray-600">
+                            {event.start_date ? `${event.start_date} - ` : ''} {event.end_date}
+                        </small>
                         { event.created_at !== event.updated_at && <small className="text-sm text-gray-600"> &middot; edited</small>}
                     </div>
                     <Dropdown>
