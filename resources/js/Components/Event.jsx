@@ -7,14 +7,7 @@ import EventForm from '@/Components/EventForm'
 
  
 export default function Event({ event }) { 
-    console.log(JSON.stringify(event));
-
     const [editing, setEditing] = useState(false);
- 
-    const submit = (e) => {
-        e.preventDefault();
-        put(route('events.update', event.id), { onSuccess: () => setEditing(false) });
-    };
 
     return (
         <div className="p-6 flex space-x-2">

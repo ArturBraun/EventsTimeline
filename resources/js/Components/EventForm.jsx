@@ -6,30 +6,29 @@ import { useForm, usePages } from '@inertiajs/inertia-react';
 import { Inertia } from '@inertiajs/inertia'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {toDateFromStr, getFormattedDate} from '../utils/common-functions'
 
  
 export default function EventForm({ event, setEditing, isEventEdit=false }) { 
-    const getFormattedDate = (date) => date.toISOString().split('T')[0];
     
     const eventData = {
         name: event.name ? event.name : '',
         short_description: event.short_description ? event.short_description : '',
         detailed_description: event.detailed_description ? event.detailed_description : '',
-        start_date: event.start_date ? new Date(event.start_date) : null,
-        end_date: event.end_date ? new Date(event.end_date) : new Date(),
+        start_date: event.start_date ? toDateFromStr(event.start_date) :  new Date(),
+        end_date: event.end_date ? toDateFromStr(event.end_date) : new Date(),
     };
-
     const { data, setData, put, processing, reset, errors } = useForm(eventData);
 
     const submit = (e) => {
-        data.start_date = getFormattedDate(data.start_date)
-        data.end_date = getFormattedDate(data.end_date)
-        console.log(JSON.stringify(data))
+        if(data.start_date){
+            data.start_date = getFormattedDate(data.start_date);
+        }
+        data.end_date = getFormattedDate(data.end_date);
 
         e.preventDefault();
-        console.log('test 2');
         if(isEventEdit){
-            put(route('events.update', event.id), { onSuccess: () => setEditing(false) });
+            Inertia.put(`/events/${event.id}`, data, { onSuccess: () => setEditing(false) });
         }
         else{
             Inertia.post('/events', data, { onSuccess: () => reset() });

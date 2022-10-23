@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
@@ -92,16 +93,16 @@ class EventController extends Controller
             'name' => 'required|string|max:128',
             'short_description' => 'required|string|max:512',
             'detailed_description' => 'required|string|max:1024',
-            'start_date' => 'date',
-            'end_date' => 'required|date',
+            'start_date' => 'date_format:Y-m-d',
+            'end_date' => 'required|date_format:Y-m-d',
         ]);
 
         $eventFromDb = Event::find($event->id);
-        $eventFromDb->name = $event->name;
-        $eventFromDb->short_description = $event->short_description;
-        $eventFromDb->detailed_description = $event->detailed_description;
-        $eventFromDb->start_date = $event->start_date;
-        $eventFromDb->end_date = $event->end_date;
+        $eventFromDb->name = $request->name;
+        $eventFromDb->short_description = $request->short_description;
+        $eventFromDb->detailed_description = $request->detailed_description;
+        $eventFromDb->start_date = $request->start_date;
+        $eventFromDb->end_date = $request->end_date;
         $eventFromDb->save();
 
         return redirect(route('events.index'));
