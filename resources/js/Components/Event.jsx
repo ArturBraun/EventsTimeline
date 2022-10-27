@@ -42,7 +42,7 @@ export default function Event({ event }) {
                     </Dropdown>
                 </div>
                 { editing ?
-                    <EventForm event={event} setEditing={setEditing} isEventEdit={true}/>
+                    <EventForm event={event} setEditing={setEditing} isFormForEdit={true}/>
                     : <p className="mt-4 text-lg text-gray-900">{event.detailed_description}</p>
                 }
             </div>
