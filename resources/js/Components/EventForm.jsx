@@ -38,7 +38,16 @@ export default function EventForm({ event, setEditing, isFormForEdit=false }) {
             Inertia.put(`/events/${event.id}`, data, { onSuccess: () => setEditing(false) });
         }
         else{
-            Inertia.post('/events', data, { onSuccess: () => reset() });
+            Inertia.post(
+                '/events', 
+                data, 
+                { 
+                    onSuccess: () => { 
+                        reset(); 
+                        setEditing(false);
+                    } 
+                }
+            );
         }
     };
 
@@ -114,11 +123,7 @@ export default function EventForm({ event, setEditing, isFormForEdit=false }) {
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                     <button type="submit" className="mr-2 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
-                    {
-                        isFormForEdit ?
-                            <button onClick={() => setEditing(false) && reset()} type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
-                        : <></>
-                    }
+                    <button onClick={() => setEditing(false) && reset()} type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
                 </div>
             </div>
 

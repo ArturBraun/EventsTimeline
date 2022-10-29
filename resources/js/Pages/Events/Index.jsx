@@ -2,14 +2,9 @@ import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
 import Event from '@/Components/Event';
-import EventForm from '@/Components/EventForm';
+import NewEvent from '@/Components/NewEvent';
  
-export default function Index({ auth, events }) {
-    const [editing, setEditing] = useState(false);
-    const emptyEvent = {
-        detailed_description: '',
-    }
- 
+export default function Index({ auth, events }) { 
     return (
         <AuthenticatedLayout 
             auth={auth}
@@ -18,16 +13,15 @@ export default function Index({ auth, events }) {
             <Head title="events" />
  
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                    <EventForm event={emptyEvent} setEditing={setEditing} />
-                </div>
+                <ol className="relative border-l border-gray-200 dark:border-gray-700">  
+                    <NewEvent />
 
-                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
                     {events.map(event =>
                         <Event key={event.id} event={event} />
                     )}
-                </div>
+                </ol>
             </div>
+            
         </AuthenticatedLayout>
     );
 }
