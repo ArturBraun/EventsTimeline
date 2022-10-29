@@ -17,7 +17,7 @@ export default function Event({ event }) {
             : 
                 <>
                     <h3 onClick={() => setDetailed(!detailed)} className="cursor-pointer mb-1 text-lg font-semibold text-gray-900 dark:text-white">{event.name}</h3>
-                    <div className="top-0 right-0">
+                    <div className="top-0 right-0 grid grid-cols-8 gap-4">
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <button>
@@ -26,7 +26,7 @@ export default function Event({ event }) {
                                     </svg>
                                 </button>
                             </Dropdown.Trigger>
-                            <Dropdown.Content>
+                            <Dropdown.Content align="left">
                                 <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={() => setEditing(true)}>
                                     Edit
                                 </button>

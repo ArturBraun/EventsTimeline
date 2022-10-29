@@ -17,7 +17,10 @@ class EventController extends Controller
     public function index()
     {
         return Inertia::render('Events/Index', [
-            'events' => Event::orderBy('end_date', 'DESC')->get(),
+            'events' => 
+                Event::orderBy('end_date', 'DESC')
+                    ->orderBy('created_at', 'DESC')
+                    ->get(),
         ]);
     }
 
