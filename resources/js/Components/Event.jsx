@@ -15,38 +15,61 @@ export default function Event({ event }) {
             { editing ?
                 <EventForm event={event} setEditing={setEditing} isFormForEdit={true}/>
             : 
-                <>
-                    <h3 onClick={() => setDetailed(!detailed)} className="cursor-pointer mb-1 text-lg font-semibold text-gray-900 dark:text-white">{event.name}</h3>
-                    <div className="top-0 right-0 grid grid-cols-8 gap-4">
-                        <Dropdown>
-                            <Dropdown.Trigger>
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                    </svg>
-                                </button>
-                            </Dropdown.Trigger>
-                            <Dropdown.Content align="left">
-                                <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={() => setEditing(true)}>
-                                    Edit
-                                </button>
-                                <Dropdown.Link as="button" href={route('events.destroy', event.id)} method="delete">
-                                    Delete
-                                </Dropdown.Link>
-                            </Dropdown.Content>
-                        </Dropdown>
+                <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+                    <div className="pt-6 pl-6 pr-6 flex space-x-2">
+                        <h3 onClick={() => setDetailed(!detailed)} className="cursor-pointer text-lg font-medium leading-6 text-gray-900">{event.name}</h3>
+                        <div className="flex-1">
+                            <div className="flex justify-between items-center">
+                                <div>
+                                </div>
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <button>
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                            </svg>
+                                        </button>
+                                    </Dropdown.Trigger>
+                                    <Dropdown.Content>
+                                        <button className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" onClick={() => setEditing(true)}>
+                                            Edit
+                                        </button>
+                                        <Dropdown.Link as="button" href={route('events.destroy', event.id)} method="delete">
+                                            Delete
+                                        </Dropdown.Link>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="cursor-pointer" onClick={() => setDetailed(!detailed)}>
-                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{event.start_date ? `${event.start_date} - ` : ""} {event.end_date}</time>
-                        <p className="text-base font-normal text-gray-500 dark:text-gray-400">{event.short_description}</p>
-                        {
-                            detailed ? 
-                            <p className="mt-4 text-lg text-gray-900">{event.detailed_description}</p>
-                            : <></>
-                        }
+                    <div onClick={() => setDetailed(!detailed)} className="cursor-pointer px-4 pb-5 sm:px-6">
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500"> {event.start_date ? `${event.start_date} - ` : ""} {event.end_date} </p>
                     </div>
-                </>
+                    <div className="border-t border-gray-200">
+                        <dl>
+                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt onClick={() => setDetailed(!detailed)} className="cursor-pointer text-sm font-medium text-gray-500">Type</dt>
+                                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">test type</dd>
+                            </div>
+                            <div onClick={() => setDetailed(!detailed)} className="cursor-pointer">
+                                <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt className="text-sm font-medium text-gray-500">Short description</dt>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event.short_description}</dd>
+                                </div>
+                                {
+                                    detailed ? 
+                                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                            <dt className="text-sm font-medium text-gray-500">Detailed description</dt>
+                                            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event.detailed_description}</dd>
+                                        </div>
+                                    : <></>
+                                }
+                            </div>
+
+                        </dl>
+                    </div>
+                </div>                    
             }
         </li>
     );
