@@ -15,11 +15,7 @@ export default function Timeline({ events, forEditing }) {
                 <div className="relative col-span-12 px-4 space-y-6 sm:col-span-9">
                     <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                         <ol className="relative border-l border-gray-200 dark:border-gray-700">  
-                            {
-                                forEditing ? 
-                                    <EventActions />
-                                : <></>
-                            }
+                            <EventActions forEditing={forEditing} />
                             {events.map(event =>
                                 <Event key={event.id} event={event} forEditing={forEditing} />
                             )}

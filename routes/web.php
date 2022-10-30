@@ -16,14 +16,8 @@ use App\Http\Controllers\EventController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::resource('/', EventController::class)
+    ->only(['index']);
 
 Route::resource('events', EventController::class)
     ->only(['index', 'store', 'update', 'destroy'])

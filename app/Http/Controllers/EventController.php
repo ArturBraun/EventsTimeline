@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -16,7 +17,19 @@ class EventController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Events/AdminTimeline', [
+        $view = 'Events/UserTimeline';
+
+        Log::debug('entry');
+        
+        if (Auth::check()) {
+            Log::debug('user is authorized');
+            $view = 'Events/AdminTimeline';
+        }
+        else {
+            Log::debug('user is not authorized');
+        }
+        
+        return Inertia::render($view, [
             'events' => 
                 Event::orderBy('end_date', 'DESC')
                     ->orderBy('created_at', 'DESC')
