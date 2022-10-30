@@ -16,7 +16,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Events/Index', [
+        return Inertia::render('Events/AdminTimeline', [
             'events' => 
                 Event::orderBy('end_date', 'DESC')
                     ->orderBy('created_at', 'DESC')
