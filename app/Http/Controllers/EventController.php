@@ -46,8 +46,8 @@ class EventController extends Controller
             'name' => 'required|string|max:128',
             'short_description' => 'required|string|max:512',
             'detailed_description' => 'required|string|max:1024',
-            'start_date' => 'date',
-            'end_date' => 'required|date',
+            'start_date' => 'date_format:Y-m-d|before:end_date',
+            'end_date' => 'required|date_format:Y-m-d',
         ]);
 
         $event = new Event;
@@ -96,7 +96,7 @@ class EventController extends Controller
             'name' => 'required|string|max:128',
             'short_description' => 'required|string|max:512',
             'detailed_description' => 'required|string|max:1024',
-            'start_date' => 'date_format:Y-m-d',
+            'start_date' => 'date_format:Y-m-d|before:end_date',
             'end_date' => 'required|date_format:Y-m-d',
         ]);
 

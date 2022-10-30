@@ -13,12 +13,24 @@ import classNames from 'classnames';
 export default function EventForm({ event, setEditing, isFormForEdit=false }) { 
 
     const [isEvent, setIsEvent] = useState(event.start_date ? false : true);
+    const convertDatesBack = () => {
+        data.start_date = toDateFromStr(data.start_date);
+        data.end_date = toDateFromStr(data.end_date);
+    };
+    const getProcessDefaultStartDate = () => {
+        let date = new Date();
+        if(event.end_date){
+            date = new Date(event.end_date);
+        }
+        date.setDate(date.getDate() - 1);
+        return date;
+    };
     
     const eventData = {
         name: event.name ? event.name : '',
         short_description: event.short_description ? event.short_description : '',
         detailed_description: event.detailed_description ? event.detailed_description : '',
-        start_date: event.start_date ? toDateFromStr(event.start_date) :  new Date(),
+        start_date: event.start_date ? toDateFromStr(event.start_date) :  getProcessDefaultStartDate(),
         end_date: event.end_date ? toDateFromStr(event.end_date) : new Date(),
     };
     const { data, setData, put, processing, reset, errors } = useForm(eventData);
@@ -35,7 +47,14 @@ export default function EventForm({ event, setEditing, isFormForEdit=false }) {
 
         e.preventDefault();
         if(isFormForEdit){
-            Inertia.put(`/events/${event.id}`, data, { onSuccess: () => setEditing(false) });
+            Inertia.put(
+                `/events/${event.id}`, 
+                data, 
+                { 
+                    onSuccess: () => setEditing(false),
+                    onError: () => convertDatesBack() 
+                }
+            );
         }
         else{
             Inertia.post(
@@ -45,7 +64,8 @@ export default function EventForm({ event, setEditing, isFormForEdit=false }) {
                     onSuccess: () => { 
                         reset(); 
                         setEditing(false);
-                    } 
+                    },
+                    onError: () => convertDatesBack()
                 }
             );
         }
