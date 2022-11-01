@@ -6,10 +6,8 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, useForm } from '@inertiajs/inertia-react';
 
-export default function ResetPassword({ token, email }) {
+export default function ResetPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        token: token,
-        email: email,
         password: '',
         password_confirmation: '',
     });
@@ -35,21 +33,6 @@ export default function ResetPassword({ token, email }) {
             <Head title="Reset Password" />
 
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="email" value="Email" />
-
-                    <TextInput
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
                 <div className="mt-4">
                     <InputLabel forInput="password" value="Password" />
 
@@ -83,7 +66,7 @@ export default function ResetPassword({ token, email }) {
 
                 <div className="flex items-center justify-end mt-4">
                     <PrimaryButton className="ml-4" processing={processing}>
-                        Reset Password
+                        Change password
                     </PrimaryButton>
                 </div>
             </form>

@@ -18,15 +18,9 @@ class EventController extends Controller
     public function index()
     {
         $view = 'Events/UserTimeline';
-
-        Log::debug('entry');
         
         if (Auth::check()) {
-            Log::debug('user is authorized');
             $view = 'Events/AdminTimeline';
-        }
-        else {
-            Log::debug('user is not authorized');
         }
         
         return Inertia::render($view, [
