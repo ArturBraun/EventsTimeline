@@ -25,7 +25,8 @@ class EventController extends Controller
         
         return Inertia::render($view, [
             'events' => 
-                Event::orderBy('end_date', 'DESC')
+                Event::with('type:id,name,color')
+                    ->orderBy('end_date', 'DESC')
                     ->orderBy('created_at', 'DESC')
                     ->get(),
         ]);
