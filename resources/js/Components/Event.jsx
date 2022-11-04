@@ -61,7 +61,7 @@ export default function Event({ event, forEditing }) {
                                     <div className="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                         <dt onClick={() => setDetailed(!detailed)} className="cursor-pointer text-sm font-medium text-gray-500">Type</dt>
                                         <dd className="mt-1 text-sm text-gray-900 flex">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="fill-[#f0d0fb] w-6 h-6">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`fill-[${event.type.color}] w-6 h-6`}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
                                             </svg>
@@ -75,7 +75,7 @@ export default function Event({ event, forEditing }) {
                             }
                             {
                                 detailed ? 
-                                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <div className={`${event.type_id ? "bg-gray-50" : "bg-white"} px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6`}>
                                         <dt className="text-sm font-medium text-gray-500">Detailed description</dt>
                                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{event.detailed_description}</dd>
                                     </div>
