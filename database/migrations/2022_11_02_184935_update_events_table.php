@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->foreignIdFor(Type::class);
+            $table->foreignIdFor(Type::class)->nullable();
         });
     }
 
