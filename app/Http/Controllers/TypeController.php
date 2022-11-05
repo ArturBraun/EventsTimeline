@@ -6,6 +6,7 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class TypeController extends Controller
 {
@@ -38,8 +39,8 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:128',
-            'color' => 'required|string|max:7',
+            'name' => 'required|string|min:1|max:128',
+            'color' => 'required|string|min:7|max:7',
         ]);
 
         $savedType = Type::create([
@@ -47,7 +48,7 @@ class TypeController extends Controller
             'color' => $request->color,
         ]);
  
-        return response(savedType, 200)
+        return response($savedType, 200)
                 ->header('Content-Type', 'application/json');
     }
 
@@ -83,8 +84,8 @@ class TypeController extends Controller
     public function update(Request $request, Type $type)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:128',
-            'color' => 'required|string|max:7',
+            'name' => 'required|string|min:1|max:128',
+            'color' => 'required|string|min:7|max:7',
         ]);
 
         $typeFromDb = Type::find($type->id);

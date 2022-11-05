@@ -9,7 +9,10 @@ export default function TypePicker({ selectedType, setSelectedType }) {
     const ref = useRef(null);
     const [types, setTypes] = useState([]);
     const [isAddingNewType, setIsAddingNewType] = useState(false);
-    const [newType, setNewType] = useState({ color: "#e8abc4" });
+    const [newType, setNewType] = useState({
+        name: "",
+        color: "#e8abc4",
+    });
     const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
     useEffect(() => {
@@ -38,6 +41,24 @@ export default function TypePicker({ selectedType, setSelectedType }) {
             });
     };
 
+    const saveNewType = (e) => {
+        e.stopPropagation();
+
+        axios
+            .post(route("types.store"), newType)
+            .then((response) => {
+                types.push(response.data);
+                setNewType({ name: "", color: "#e8abc4" });
+            })
+            .catch((error) => {
+                if (error.response.status === 422) {
+                    alert("Data is incorrect. Type name cannot be empty!");
+                } else {
+                    alert("Unknown error happened...");
+                }
+            });
+    };
+
     const blockCurrentMenuItemFromClosing = () => {
         setTimeout(() => {
             ref.current?.click();
@@ -56,6 +77,10 @@ export default function TypePicker({ selectedType, setSelectedType }) {
 
     const handleNewTypeColorChange = (color) => {
         newType.color = color.hex;
+    };
+
+    const handleNewTypeNameChange = (e) => {
+        newType.name = e.target.value;
     };
 
     const handleClick = () => {
@@ -188,7 +213,10 @@ export default function TypePicker({ selectedType, setSelectedType }) {
                                                 />
                                             </svg>
                                             {displayColorPicker ? (
-                                                <div style={popover}>
+                                                <div
+                                                    style={popover}
+                                                    className="-ml-20"
+                                                >
                                                     <div
                                                         onClick={handleClose}
                                                     />
@@ -211,10 +239,7 @@ export default function TypePicker({ selectedType, setSelectedType }) {
                                         <input
                                             placeholder="Name"
                                             onChange={(e) =>
-                                                setNewType(
-                                                    "name",
-                                                    e.target.value
-                                                )
+                                                handleNewTypeNameChange(e)
                                             }
                                             type="text"
                                             name="new-type-name"
@@ -229,6 +254,7 @@ export default function TypePicker({ selectedType, setSelectedType }) {
                                             strokeWidth="1.5"
                                             stroke="currentColor"
                                             className="w-6 h-6 absolute right-11"
+                                            onClick={(e) => saveNewType(e)}
                                         >
                                             <path
                                                 strokeLinecap="round"
@@ -263,11 +289,6 @@ export default function TypePicker({ selectedType, setSelectedType }) {
                     </Menu.Items>
                 </Transition>
             </Menu>
-
-            {/* <BlockPicker
-                color={newType.color}
-                onChangeComplete={onHandleNewTypeColorChange}
-            /> */}
         </>
     );
 }
