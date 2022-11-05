@@ -56,6 +56,7 @@ class EventController extends Controller
             'detailed_description' => 'required|string|max:1024',
             'start_date' => 'date_format:Y-m-d|before:end_date',
             'end_date' => 'required|date_format:Y-m-d',
+            'type_id' => 'integer|min:1|nullable',
         ]);
 
         $event = new Event;
@@ -64,6 +65,7 @@ class EventController extends Controller
         $event->detailed_description = $request->detailed_description;
         $event->start_date = $request->start_date;
         $event->end_date = $request->end_date;
+        $event->type_id = $request->type_id;
         $event->save();
  
         return redirect(route('events.index'));
@@ -106,6 +108,7 @@ class EventController extends Controller
             'detailed_description' => 'required|string|max:1024',
             'start_date' => 'date_format:Y-m-d|before:end_date',
             'end_date' => 'required|date_format:Y-m-d',
+            'type_id' => 'integer|min:1|nullable',
         ]);
 
         $eventFromDb = Event::find($event->id);
@@ -114,6 +117,7 @@ class EventController extends Controller
         $eventFromDb->detailed_description = $request->detailed_description;
         $eventFromDb->start_date = $request->start_date;
         $eventFromDb->end_date = $request->end_date;
+        $eventFromDb->type_id = $request->type_id;
         $eventFromDb->save();
 
         return redirect(route('events.index'));

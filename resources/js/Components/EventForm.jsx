@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toDateFromStr, getFormattedDate } from "../utils/common-functions";
 import classNames from "classnames";
+import TypePicker from "./TypePicker";
 
 export default function EventForm({
     event,
@@ -15,6 +16,10 @@ export default function EventForm({
     isFormForEdit = false,
 }) {
     const [isEvent, setIsEvent] = useState(event.start_date ? false : true);
+    const [selectedType, setSelectedType] = useState(
+        event.type ? event.type : {}
+    );
+
     const convertDatesBack = () => {
         data.start_date = toDateFromStr(data.start_date);
         data.end_date = toDateFromStr(data.end_date);
@@ -54,6 +59,10 @@ export default function EventForm({
             delete data.start_date;
         }
 
+        if (selectedType.id) {
+            data.type_id = selectedType.id;
+        }
+
         e.preventDefault();
         if (isFormForEdit) {
             Inertia.put(`/events/${event.id}`, data, {
@@ -81,7 +90,7 @@ export default function EventForm({
                                 htmlFor="type-radio-group"
                                 className="block text-sm font-medium text-gray-700"
                             >
-                                Type
+                                Class
                             </label>
                             <ul
                                 id="type-radio-group"
@@ -151,6 +160,21 @@ export default function EventForm({
                             />
                         </div>
 
+                        <div>
+                            <label
+                                htmlFor="textarea-detailed-description"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                Type
+                            </label>
+                            <div className="mt-1">
+                                <TypePicker
+                                    selectedType={selectedType}
+                                    setSelectedType={setSelectedType}
+                                />
+                            </div>
+                        </div>
+
                         <div className="col-span-6">
                             <label
                                 htmlFor="input-short-description"
@@ -208,6 +232,18 @@ export default function EventForm({
                             />
                         </div>
                     </div>
+
+                    {/* <div>
+                        <label
+                            htmlFor="textarea-detailed-description"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            Type
+                        </label>
+                        <div className="mt-1">
+                            <TypePicker />
+                        </div>
+                    </div> */}
 
                     <div>
                         <label
