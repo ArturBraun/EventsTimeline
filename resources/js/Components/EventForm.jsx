@@ -138,6 +138,21 @@ export default function EventForm({
                                 </li>
                             </ul>
                         </div>
+
+                        <div>
+                            <label
+                                htmlFor="textarea-detailed-description"
+                                className="block text-sm font-medium text-gray-700"
+                            >
+                                Type
+                            </label>
+                            <div className="mt-1">
+                                <TypePicker
+                                    selectedType={selectedType}
+                                    setSelectedType={setSelectedType}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-6 gap-6">
@@ -158,21 +173,6 @@ export default function EventForm({
                                 id="input-name"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="textarea-detailed-description"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Type
-                            </label>
-                            <div className="mt-1">
-                                <TypePicker
-                                    selectedType={selectedType}
-                                    setSelectedType={setSelectedType}
-                                />
-                            </div>
                         </div>
 
                         <div className="col-span-6">

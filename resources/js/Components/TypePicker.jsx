@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { BlockPicker } from "react-color";
+import { BlockPicker, ChromePicker } from "react-color";
 
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
@@ -10,6 +10,7 @@ export default function TypePicker({ selectedType, setSelectedType }) {
     const [types, setTypes] = useState([]);
     const [isAddingNewType, setIsAddingNewType] = useState(false);
     const [newType, setNewType] = useState({ color: "#e8abc4" });
+    const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
     useEffect(() => {
         const fetchTypes = async () => {
@@ -53,8 +54,28 @@ export default function TypePicker({ selectedType, setSelectedType }) {
         setIsAddingNewType(false);
     };
 
-    const onHandleNewTypeColorChange = (color) => {
-        setData("color", color.hex);
+    const handleNewTypeColorChange = (color) => {
+        newType.color = color.hex;
+    };
+
+    const handleClick = () => {
+        setDisplayColorPicker(!displayColorPicker);
+    };
+
+    const handleClose = () => {
+        setDisplayColorPicker(false);
+    };
+
+    const popover = {
+        position: "absolute",
+        zIndex: "2",
+    };
+    const cover = {
+        position: "fixed",
+        top: "0px",
+        right: "0px",
+        bottom: "0px",
+        left: "0px",
     };
 
     return (
@@ -145,25 +166,47 @@ export default function TypePicker({ selectedType, setSelectedType }) {
                                         className="hover:bg-gray-100 block px-4 py-2 text-sm grid grid-cols-4"
                                         onClick={(e) => e.preventDefault()}
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="yellow"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="w-6 h-6"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
-                                            />
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M6 6h.008v.008H6V6z"
-                                            />
-                                        </svg>
+                                        <div>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill={newType.color}
+                                                viewBox="0 0 24 24"
+                                                strokeWidth="1.5"
+                                                stroke="currentColor"
+                                                className="w-6 h-6"
+                                                onClick={handleClick}
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
+                                                />
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M6 6h.008v.008H6V6z"
+                                                />
+                                            </svg>
+                                            {displayColorPicker ? (
+                                                <div style={popover}>
+                                                    <div
+                                                        onClick={handleClose}
+                                                    />
+                                                    <BlockPicker
+                                                        color={newType.color}
+                                                        onChangeComplete={(
+                                                            color
+                                                        ) =>
+                                                            handleNewTypeColorChange(
+                                                                color
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </div>
 
                                         <input
                                             placeholder="Name"
