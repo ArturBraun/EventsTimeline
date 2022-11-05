@@ -45,7 +45,12 @@ export default function TypePicker({ selectedType, setSelectedType }) {
 
     const addNewTypeClicked = () => {
         blockCurrentMenuItemFromClosing();
-        setIsAddingNewType(!isAddingNewType);
+        setIsAddingNewType(true);
+    };
+
+    const quitAddingNewType = (e) => {
+        e.preventDefault();
+        setIsAddingNewType(false);
     };
 
     const onHandleNewTypeColorChange = (color) => {
@@ -136,8 +141,74 @@ export default function TypePicker({ selectedType, setSelectedType }) {
                         <div className="py-1">
                             <Menu.Item onClick={addNewTypeClicked}>
                                 {isAddingNewType ? (
-                                    <div className="hover:bg-gray-100 block px-4 py-2 text-sm">
-                                        Adding
+                                    <div
+                                        className="hover:bg-gray-100 block px-4 py-2 text-sm grid grid-cols-4"
+                                        onClick={(e) => e.preventDefault()}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="yellow"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="currentColor"
+                                            className="w-6 h-6"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
+                                            />
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M6 6h.008v.008H6V6z"
+                                            />
+                                        </svg>
+
+                                        <input
+                                            placeholder="Name"
+                                            onChange={(e) =>
+                                                setNewType(
+                                                    "name",
+                                                    e.target.value
+                                                )
+                                            }
+                                            type="text"
+                                            name="new-type-name"
+                                            id="new-type-input-name"
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-4"
+                                        />
+
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="currentColor"
+                                            className="w-6 h-6 absolute right-11"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                            />
+                                        </svg>
+
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="currentColor"
+                                            className="w-6 h-6 absolute right-4"
+                                            onClick={quitAddingNewType}
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                            />
+                                        </svg>
                                     </div>
                                 ) : (
                                     <div className="hover:bg-gray-100 block px-4 py-2 text-sm">
