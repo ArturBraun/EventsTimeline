@@ -107,7 +107,7 @@ class TypeController extends Controller
                 ->get();
         
         if(!$events->isEmpty()){
-            return response('Type cannot be deleted as there are existing events with this type', 400);
+            return response('Type cannot be deleted as there are existing events with this type!', 400);
         }
 
         $typeFromDb = Type::find($type->id);
