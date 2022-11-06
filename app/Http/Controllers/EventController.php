@@ -51,9 +51,9 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:128',
-            'short_description' => 'required|string|max:512',
-            'detailed_description' => 'required|string|max:1024',
+            'name' => 'required|string|min:1|max:128',
+            'short_description' => 'required|string|min:1|max:512',
+            'detailed_description' => 'required|string|min:1|max:1024',
             'start_date' => 'date_format:Y-m-d|before:end_date',
             'end_date' => 'required|date_format:Y-m-d',
             'type_id' => 'integer|min:1|nullable',
@@ -103,9 +103,9 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:128',
-            'short_description' => 'required|string|max:512',
-            'detailed_description' => 'required|string|max:1024',
+            'name' => 'required|string|min:1|max:128',
+            'short_description' => 'required|string|min:1|max:512',
+            'detailed_description' => 'required|string|min:1|max:1024',
             'start_date' => 'date_format:Y-m-d|before:end_date',
             'end_date' => 'required|date_format:Y-m-d',
             'type_id' => 'integer|min:1|nullable',

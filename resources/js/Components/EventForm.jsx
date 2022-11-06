@@ -20,10 +20,6 @@ export default function EventForm({
         event.type ? event.type : {}
     );
 
-    const convertDatesBack = () => {
-        data.start_date = toDateFromStr(data.start_date);
-        data.end_date = toDateFromStr(data.end_date);
-    };
     const getProcessDefaultStartDate = () => {
         let date = new Date();
         if (event.end_date) {
@@ -31,6 +27,14 @@ export default function EventForm({
         }
         date.setDate(date.getDate() - 1);
         return date;
+    };
+
+    const convertDatesBack = () => {
+        if (!data.start_date) {
+            data.start_date = getFormattedDate(getProcessDefaultStartDate());
+        }
+        data.start_date = toDateFromStr(data.start_date);
+        data.end_date = toDateFromStr(data.end_date);
     };
 
     const eventData = {
@@ -171,6 +175,7 @@ export default function EventForm({
                                 type="text"
                                 name="name"
                                 id="input-name"
+                                placeholder="Name..."
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
@@ -190,6 +195,7 @@ export default function EventForm({
                                 type="text"
                                 name="short-description"
                                 id="input-short-description"
+                                placeholder="Very important thing..."
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
@@ -232,18 +238,6 @@ export default function EventForm({
                             />
                         </div>
                     </div>
-
-                    {/* <div>
-                        <label
-                            htmlFor="textarea-detailed-description"
-                            className="block text-sm font-medium text-gray-700"
-                        >
-                            Type
-                        </label>
-                        <div className="mt-1">
-                            <TypePicker />
-                        </div>
-                    </div> */}
 
                     <div>
                         <label
