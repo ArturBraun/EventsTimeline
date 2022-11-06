@@ -91,6 +91,21 @@ export default function TypePicker({ selectedType, setSelectedType }) {
         setDisplayColorPicker(false);
     };
 
+    const handleKeyClicked = (event) => {
+        // Because dropdown is automatically closing when spacebar is clicked, I need to prevent this behaviour manually, when user is adding space in new-type-input-name
+        if (event.which === 32) {
+            const currPos = event.target.selectionStart;
+            const currStr = event.target.value;
+            event.target.value =
+                currStr.substring(0, currPos) +
+                " " +
+                currStr.substring(currPos);
+            event.target.selectionStart = currPos + 1;
+            event.target.selectionEnd = currPos + 1;
+            event.preventDefault();
+        }
+    };
+
     const popover = {
         position: "absolute",
         zIndex: "2",
@@ -238,12 +253,11 @@ export default function TypePicker({ selectedType, setSelectedType }) {
 
                                         <input
                                             placeholder="Name"
-                                            onChange={(e) =>
-                                                handleNewTypeNameChange(e)
-                                            }
+                                            onChange={handleNewTypeNameChange}
                                             type="text"
                                             name="new-type-name"
                                             id="new-type-input-name"
+                                            onKeyDown={handleKeyClicked}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-4"
                                         />
 
@@ -254,7 +268,7 @@ export default function TypePicker({ selectedType, setSelectedType }) {
                                             strokeWidth="1.5"
                                             stroke="currentColor"
                                             className="w-6 h-6 absolute right-11"
-                                            onClick={(e) => saveNewType(e)}
+                                            onClick={saveNewType}
                                         >
                                             <path
                                                 strokeLinecap="round"
