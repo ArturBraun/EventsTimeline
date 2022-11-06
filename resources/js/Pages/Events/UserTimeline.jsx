@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Timeline from "@/Components/Timeline";
 import { Link, Head } from "@inertiajs/inertia-react";
 
-export default function AdminTimeline({ props, events }) {
+export default function UserTimeline({ props, events }) {
     return (
         <>
             <Head title="Welcome to timeline" />
